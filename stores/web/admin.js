@@ -294,7 +294,7 @@ $("#fImageUrlBtn").addEventListener("click", () => {
 $("#modalSave").addEventListener("click", async () => {
   const name = $("#fName").value.trim(); if (!name) return toast("Nama wajib", false);
   const productId = editingId || slugify(name);
-  const product = { id: productId, name, cat: $("#fCat").value, subtitle: $("#fSubtitle").value.trim(), initials: $("#fInitials").value.trim() || name.slice(0,2).toUpperCase(), active: $("#fActive").checked, sort_order: Date.now() };
+  const product = { id: productId, name, cat: $("#fCat").value, subtitle: $("#fSubtitle").value.trim(), initials: $("#fInitials").value.trim() || name.slice(0,2).toUpperCase(), active: $("#fActive").checked, sort_order: Math.floor(Date.now() / 1000) };
 
   const fileInput = $("#fImageUpload");
   const imageUrlManual = $("#fImageUrl").value.trim();

@@ -13,9 +13,9 @@ export default async function handler(req, res) {
     return res.json({
       name: data.store_name || "Novaciy°",
       tagline: data.store_tagline || "Produk Digital Premium",
-      hero_title: data.hero_title || 'Beli sekali klik, akun langsung jadi.',
-      hero_subtitle: data.hero_subtitle || 'Pilih produk, bayar via QRIS, akun langsung terkirim otomatis.',
-      footer_text: data.footer_text || "© Novaciy° · Semua transaksi via QRIS aman.",
+      hero_title: data.store_hero_title || 'Beli sekali klik, akun langsung jadi.',
+      hero_subtitle: data.store_hero_subtitle || 'Pilih produk, bayar via QRIS, akun langsung terkirim otomatis.',
+      footer_text: data.store_footer_text || "© Novaciy° · Semua transaksi via QRIS aman.",
       bantuan_contact: data.bantuan_contact || '',
       bantuan_faq: data.bantuan_faq || '',
       annon: {

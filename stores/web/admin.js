@@ -313,8 +313,9 @@ $("#modalSave").addEventListener("click", async () => {
   try {
     await api("save_product", { product });
     for (const row of $$(".variant-row")) {
+      const existingId = row.dataset.id;
       const v = {
-        id: row.dataset.id || `${product.id}-${slugify($(".v-name",row).value)}`,
+        id: existingId || undefined,
         product_id: product.id,
         name: $(".v-name",row).value.trim(),
         sku: $(".v-sku",row).value.trim().toUpperCase() || null,  // ⬅️ SKU!

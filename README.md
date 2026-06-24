@@ -23,3 +23,4 @@
 ## 🎨 Design
 
 Ferrari-inspired: cinematic black, Ferrari Red (#FF2800), dark theme.
+#

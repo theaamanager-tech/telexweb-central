@@ -1,22 +1,29 @@
 @echo off
 cd /d D:\9router\PROJECTBARU\STOKALLSTORE\telexweb-central
 
-echo === Init Git ===
-git init
+echo ==============================
+echo   PUSH TELEXWEB CENTRAL
+echo ==============================
 
-echo === Add Remote ===
-git remote add origin https://github.com/theaamanager-tech/telexweb-central.git
+echo [1/3] Hapus embedded .git...
+if exist central\.git rmdir /s /q central\.git
+if exist stores\telegram\.git rmdir /s /q stores\telegram\.git
+echo   OK
 
-echo === Add All Files ===
+echo [2/3] Copy stores\web...
+if not exist stores\web (
+  if exist ..\stores\web (
+    xcopy /E /I /Y ..\stores\web stores\web >nul
+  )
+)
+echo   OK
+
+echo [3/3] Git add + commit + push...
 git add .
-
-echo === Commit ===
-git commit -m "feat: fase 3-4 - semua toko connect Central + deploy guide"
-
-echo === Push ===
+git commit -m "feat: full telexweb - all stores + central"
 git branch -M main
 git push -u origin main --force
 
 echo.
-echo Selesai! Kalau ada error login, login dulu ya.
+if %errorlevel% equ 0 (echo BERHASIL!) else (echo GAGAL!)
 pause

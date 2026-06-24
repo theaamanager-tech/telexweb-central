@@ -22,7 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Plus, Search, Upload, Package } from "lucide-react"
+import { Plus, Search, Upload, Package, Pencil, Trash2 } from "lucide-react"
 import Link from "next/link"
 
 interface MasterProduct {
@@ -60,6 +60,8 @@ export default function ProdukPage() {
   const [openProduct, setOpenProduct] = useState(false)
   const [openVariant, setOpenVariant] = useState(false)
   const [openBulk, setOpenBulk] = useState(false)
+  const [openEditProduct, setOpenEditProduct] = useState(false)
+  const [openEditVariant, setOpenEditVariant] = useState(false)
 
   // Form states
   const [prodName, setProdName] = useState("")
@@ -69,6 +71,15 @@ export default function ProdukPage() {
   const [varSku, setVarSku] = useState("")
   const [bulkSku, setBulkSku] = useState("")
   const [bulkData, setBulkData] = useState("")
+
+  // Edit states
+  const [editProduct, setEditProduct] = useState<MasterProduct | null>(null)
+  const [editVariant, setEditVariant] = useState<MasterVariant | null>(null)
+  const [editProdName, setEditProdName] = useState("")
+  const [editProdCat, setEditProdCat] = useState("ai")
+  const [editVarProductId, setEditVarProductId] = useState("")
+  const [editVarName, setEditVarName] = useState("")
+  const [editVarSku, setEditVarSku] = useState("")
 
   useEffect(() => {
     loadData()
@@ -114,6 +125,53 @@ export default function ProdukPage() {
     setVarSku("")
     setOpenVariant(false)
     loadData()
+  }
+
+  async function updateProduct() {
+    if (!editProduct || !editProdName) return
+    await supabase.from("master_products").update({ name: editProdName, cat: editProdCat }).eq("id", editProduct.id)
+    setOpenEditProduct(false)
+    setEditProduct(null)
+    loadData()
+  }
+
+  async function deleteProduct(id: string) {
+    if (!confirm("Hapus produk ini? Semua varian di dalamnya juga akan terhapus.")) return
+    await supabase.from("master_products").delete().eq("id", id)
+    loadData()
+  }
+
+  async function updateVariant() {
+    if (!editVariant || !editVarName || !editVarSku) return
+    await supabase.from("master_variants").update({
+      product_id: editVarProductId,
+      sku: editVarSku.toUpperCase(),
+      name: editVarName,
+    }).eq("id", editVariant.id)
+    setOpenEditVariant(false)
+    setEditVariant(null)
+    loadData()
+  }
+
+  async function deleteVariant(id: string) {
+    if (!confirm("Hapus varian ini?")) return
+    await supabase.from("master_variants").delete().eq("id", id)
+    loadData()
+  }
+
+  function openEditProductDialog(p: MasterProduct) {
+    setEditProduct(p)
+    setEditProdName(p.name)
+    setEditProdCat(p.cat)
+    setOpenEditProduct(true)
+  }
+
+  function openEditVariantDialog(v: MasterVariant) {
+    setEditVariant(v)
+    setEditVarProductId(v.product_id)
+    setEditVarName(v.name)
+    setEditVarSku(v.sku)
+    setOpenEditVariant(true)
   }
 
   async function addBulkStock() {
@@ -251,6 +309,22 @@ export default function ProdukPage() {
                 <Badge className="bg-zinc-800 text-zinc-400 border-zinc-700 ml-2 text-[10px]">
                   {product.cat}
                 </Badge>
+                <div className="ml-auto flex gap-1">
+                  <button
+                    onClick={() => openEditProductDialog(product)}
+                    className="p-1.5 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-800 transition-colors"
+                    title="Edit produk"
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => deleteProduct(product.id)}
+                    className="p-1.5 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-zinc-800 transition-colors"
+                    title="Hapus produk"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
               <Table>
                 <TableHeader>
@@ -289,6 +363,20 @@ export default function ProdukPage() {
                             >
                               Detail
                             </Link>
+                            <button
+                              onClick={() => openEditVariantDialog(v)}
+                              className="p-1.5 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-800 transition-colors"
+                              title="Edit varian"
+                            >
+                              <Pencil className="w-3.5 h-3.5" />
+                            </button>
+                            <button
+                              onClick={() => deleteVariant(v.id)}
+                              className="p-1.5 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-zinc-800 transition-colors"
+                              title="Hapus varian"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
                           </div>
                         </TableCell>
                       </TableRow>
@@ -300,6 +388,74 @@ export default function ProdukPage() {
           ))}
         </div>
       )}
+
+      {/* Edit Product Dialog */}
+      <Dialog open={openEditProduct} onOpenChange={setOpenEditProduct}>
+        <DialogContent className="bg-zinc-900 border-zinc-800 text-white">
+          <DialogHeader>
+            <DialogTitle>Edit Produk</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 pt-2">
+            <Input
+              placeholder="Nama produk"
+              value={editProdName}
+              onChange={(e) => setEditProdName(e.target.value)}
+              className="bg-zinc-800 border-zinc-700 text-white"
+            />
+            <Select value={editProdCat} onValueChange={(v) => v && setEditProdCat(v)}>
+              <SelectTrigger className="bg-zinc-800 border-zinc-700 text-white">
+                <SelectValue placeholder="Kategori" />
+              </SelectTrigger>
+              <SelectContent className="bg-zinc-800 border-zinc-700 text-white">
+                <SelectItem value="ai">AI Tools</SelectItem>
+                <SelectItem value="editing">Editing</SelectItem>
+                <SelectItem value="account">Akun</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button onClick={updateProduct} className="w-full bg-[#FF2800] hover:bg-[#FF2800]/80 text-white">
+              Simpan
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Variant Dialog */}
+      <Dialog open={openEditVariant} onOpenChange={setOpenEditVariant}>
+        <DialogContent className="bg-zinc-900 border-zinc-800 text-white">
+          <DialogHeader>
+            <DialogTitle>Edit Varian</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 pt-2">
+            <Select value={editVarProductId} onValueChange={(v) => v && setEditVarProductId(v)}>
+              <SelectTrigger className="bg-zinc-800 border-zinc-700 text-white">
+                <SelectValue placeholder="Pilih produk" />
+              </SelectTrigger>
+              <SelectContent className="bg-zinc-800 border-zinc-700 text-white">
+                {products.map((p) => (
+                  <SelectItem key={p.id} value={p.id}>
+                    {p.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Input
+              placeholder="SKU (contoh: CC-7D)"
+              value={editVarSku}
+              onChange={(e) => setEditVarSku(e.target.value)}
+              className="bg-zinc-800 border-zinc-700 text-white font-mono uppercase"
+            />
+            <Input
+              placeholder="Nama varian (contoh: 7 Hari)"
+              value={editVarName}
+              onChange={(e) => setEditVarName(e.target.value)}
+              className="bg-zinc-800 border-zinc-700 text-white"
+            />
+            <Button onClick={updateVariant} className="w-full bg-[#FF2800] hover:bg-[#FF2800]/80 text-white">
+              Simpan
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Bulk Add Dialog */}
       <Dialog open={openBulk} onOpenChange={setOpenBulk}>

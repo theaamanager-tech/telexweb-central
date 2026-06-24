@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id" class="dark" style="background-color:#0D0E10">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Verdant° — Produk Digital Premium</title>
+  <meta name="description" content="Beli produk digital premium dengan QRIS. Pengiriman akun otomatis & instan." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Outfit:wght@500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: {
+      colors: { ink:"#0D0E10", surface:"#121614", jade:"#0F7A62", jadebright:"#28C39D", deep:"#0C3B2E", mint:"#CFEEE6" },
+      fontFamily: { serif:['"Playfair Display"',"serif"], sans:['"Space Grotesk"',"sans-serif"], weghorst:['"BrightRustic"','"Weghorst"',"sans-serif"] },
+    }}};
+  </script>
+  <!-- Background: statis BG1 langsung di body -->
+  <style>
+    @font-face{font-family:'Weghorst';src:url('/weghorst.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:'BrightRustic';src:url('/brightrustic.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+    .glass{background:rgba(15,122,98,.07);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+    .card-in{opacity:0;transform:translateY(14px);transition:.5s cubic-bezier(.2,.7,.2,1)} .card-in.in{opacity:1;transform:none}
+    .drawer{transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+    body{background:linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.72)),url('https://wfaeesuxuqftmlyeizan.supabase.co/storage/v1/object/public/bg-images/b793c9d5-f879-4368-b76b-db31829d324e-1.webp') center/cover fixed #0D0E10 !important}
+    html{background:#0D0E10 !important}
+  </style>
+  <!-- Instant brand dihapus — pakai HTML default (tanpa flash localStorage usang) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+</head>
+<body class="font-sans text-mint/90 antialiased overflow-x-hidden min-h-screen">
+  <div class="grid grid-cols-1 md:grid-cols-[248px_minmax(0,1fr)] min-h-screen">
+
+    <!-- ============ SIDEBAR ============ -->
+    <aside id="sidebar" class="drawer fixed md:sticky top-0 z-40 h-screen w-[248px] -translate-x-full md:translate-x-0 glass border-r border-mint/10 px-5 py-7 flex flex-col gap-7">
+      <div class="font-serif text-3xl font-semibold tracking-tight">Verdant°</div>
+      <nav class="flex flex-col gap-1">
+        <span class="text-[12px] uppercase tracking-widest text-mint/40 mt-2 mb-1">Menu</span>
+        <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-jadebright/10 text-white" href="#"><i data-lucide="layout-dashboard" class="w-[20px]"></i> <span class="text-base">Dashboard</span></a>
+        <a class="nav-cat flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-mint/5 transition" href="#products" data-filter="all"><i data-lucide="shopping-bag" class="w-[20px]"></i> <span class="text-base">Semua Produk</span></a>
+        <a class="nav-cat flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-mint/5 transition" href="#products" data-filter="editing"><i data-lucide="scissors" class="w-[20px]"></i> <span class="text-base">Editing</span></a>
+        <a class="nav-cat flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-mint/5 transition" href="#products" data-filter="ai"><i data-lucide="sparkles" class="w-[20px]"></i> <span class="text-base">AI Tools</span></a>
+        <a class="nav-cat flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-mint/5 transition" href="#products" data-filter="account"><i data-lucide="user-round" class="w-[20px]"></i> <span class="text-base">Akun</span></a>
+        <span class="text-[12px] uppercase tracking-widest text-mint/40 mt-3 mb-1">Info</span>
+        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-mint/5 transition" href="#tutorial"><i data-lucide="badge-check" class="w-[20px]"></i> <span class="text-base">Cara Order</span></a>
+        <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-mint/5 transition" href="#bantuan"><i data-lucide="life-buoy" class="w-[20px]"></i> <span class="text-base">Bantuan</span></a>
+      </nav>
+      <div class="mt-auto glass border border-mint/10 rounded-2xl p-4 text-sm">
+        <div class="flex items-center gap-2 text-jadebright mb-2"><i data-lucide="qr-code" class="w-[18px]"></i><span class="font-semibold">Bayar QRIS</span></div>
+        <p class="text-mint/60">Scan, bayar, akun langsung dikirim otomatis sebagai file.</p>
+      </div>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main class="px-4 sm:px-8 py-6 w-full min-w-0">
+     <div class="max-w-[1500px] mx-auto w-full">
+      <!-- topbar -->
+      <header class="flex items-center gap-3 mb-6">
+        <button id="menuToggle" class="md:hidden grid place-items-center w-10 h-10 rounded-xl glass border border-mint/10"><i data-lucide="menu" class="w-5"></i></button>
+        <div class="flex-1 flex items-center gap-2 glass border border-mint/10 rounded-xl px-3 h-11 max-w-md">
+          <i data-lucide="search" class="w-[18px] text-mint/40"></i>
+          <input id="searchInput" type="text" placeholder="Cari produk…" class="bg-transparent outline-none w-full text-sm placeholder:text-mint/30" />
+        </div>
+        <span class="ml-auto hidden sm:flex items-center gap-1.5 text-xs text-mint/50"><i data-lucide="badge-check" class="w-4 text-jadebright"></i> Pengiriman Otomatis</span>
+      </header>
+
+      <!-- announcement bar -->
+      <div id="annonBar" class="mb-5 hidden"></div>
+
+      <!-- hero -->
+      <section class="mb-8">
+        <span class="text-xs text-mint/50">© Toko Produk Digital — garansi &amp; terpercaya · Pembayaran QRIS</span>
+        <h1 id="heroTitle" class="text-4xl sm:text-5xl font-medium leading-[1.05] mt-2 text-white" style="font-family:'BrightRustic','Weghorst',sans-serif">Beli sekali klik, <em class="italic text-jadebright">akun langsung jadi.</em></h1>
+        <p id="heroSub" class="text-mint/60 mt-3 max-w-lg">Pilih produk, bayar via QRIS, akun langsung terkirim otomatis.</p>
+      </section>
+
+      <!-- stats -->
+      <section class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+        <article class="glass border border-mint/10 rounded-2xl p-4"><span id="stProducts" class="font-serif text-3xl text-white">—</span><span class="block text-xs text-mint/50 mt-1">Produk</span></article>
+        <article class="glass border border-mint/10 rounded-2xl p-4"><span id="stStock" class="font-serif text-3xl text-white">—</span><span class="block text-xs text-mint/50 mt-1">Stok Siap</span></article>
+        <article class="glass border border-mint/10 rounded-2xl p-4"><span class="font-serif text-3xl text-white">QRIS</span><span class="block text-xs text-mint/50 mt-1">Pembayaran</span></article>
+        <article class="glass border border-mint/10 rounded-2xl p-4"><span class="font-serif text-3xl text-white">4.9</span><span class="block text-xs text-mint/50 mt-1">Rating</span></article>
+      </section>
+
+      <!-- filters -->
+      <section id="products" class="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <h2 class="text-2xl text-white" style="font-family:'BrightRustic','Weghorst',sans-serif">Katalog <em class="italic text-jadebright">Produk</em></h2>
+        <div id="filters" class="flex flex-wrap gap-2">
+          <button class="chip px-4 py-1.5 rounded-full text-sm bg-jadebright text-ink font-semibold" data-filter="all">Semua</button>
+          <button class="chip px-4 py-1.5 rounded-full text-sm glass border border-mint/10" data-filter="editing">Editing</button>
+          <button class="chip px-4 py-1.5 rounded-full text-sm glass border border-mint/10" data-filter="ai">AI Tools</button>
+          <button class="chip px-4 py-1.5 rounded-full text-sm glass border border-mint/10" data-filter="account">Akun</button>
+        </div>
+      </section>
+
+      <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"></div>
+
+      <footer class="mt-12 py-6 border-t border-mint/10 text-center text-xs text-mint/30">© Verdant° · Semua transaksi via QRIS aman.</footer>
+     </div>
+    </main>
+  </div>
+
+  <!-- ============ TUTORIAL MODAL ============ -->
+  <div id="tutorialOverlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-60 hidden"></div>
+  <aside id="tutorialDrawer" class="drawer fixed top-0 right-0 z-70 h-screen w-[min(520px,100%)] glass border-l border-mint/10 translate-x-full flex flex-col">
+    <div class="flex items-center justify-between p-5 border-b border-mint/10">
+      <h3 class="font-serif text-xl text-white flex items-center gap-2"><i data-lucide="badge-check" class="w-5 text-jadebright"></i> Cara Order</h3>
+      <button id="tutorialClose" class="grid place-items-center w-9 h-9 rounded-lg hover:bg-mint/5"><i data-lucide="x" class="w-5"></i></button>
+    </div>
+    <div class="flex-1 overflow-y-auto p-5 space-y-6">
+      <div class="glass border border-mint/10 rounded-2xl p-5">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-8 h-8 rounded-full bg-jadebright text-ink font-bold grid place-items-center text-sm">1</span>
+          <div><h4 class="text-white font-semibold">Pilih Produk &amp; Variasi</h4><p class="text-xs text-mint/50">Temukan produk yang kamu butuhkan dari katalog.</p></div>
+        </div>
+        <ul class="text-sm text-mint/70 space-y-2 ml-11 list-disc marker:text-jadebright">
+          <li>Gunakan filter kategori atau kolom pencarian untuk menemukan produk.</li>
+          <li>Klik dropdown <strong class="text-white">pilih variasi</strong> untuk memilih masa berlaku atau tipe produk yang diinginkan.</li>
+          <li>Cek harga dan ketersediaan stok — jika ada label <span class="text-amber-400">⛔ Stok Habis</span>, stok sedang kosong.</li>
+        </ul>
+      </div>
+
+      <div class="glass border border-mint/10 rounded-2xl p-5">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-8 h-8 rounded-full bg-jadebright text-ink font-bold grid place-items-center text-sm">2</span>
+          <div><h4 class="text-white font-semibold">Klik Beli</h4><p class="text-xs text-mint/50">Setelah yakin dengan pilihanmu, klik tombol Beli.</p></div>
+        </div>
+        <ul class="text-sm text-mint/70 space-y-2 ml-11 list-disc marker:text-jadebright">
+          <li>Panel pembayaran akan terbuka dari sisi kanan layar.</li>
+          <li>Periksa kembali nama produk, varian, dan total harga.</li>
+          <li>Jika ada kode kupon, masukkan pada kolom <strong class="text-white">Kode Kupon</strong> (opsional).</li>
+          <li>Kontak WhatsApp/email bisa diisi jika ingin menerima notifikasi bantuan (opsional).</li>
+        </ul>
+      </div>
+
+      <div class="glass border border-mint/10 rounded-2xl p-5">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-8 h-8 rounded-full bg-jadebright text-ink font-bold grid place-items-center text-sm">3</span>
+          <div><h4 class="text-white font-semibold">Bayar dengan QRIS</h4><p class="text-xs text-mint/50">Scan kode QR menggunakan aplikasi e-wallet atau m-banking.</p></div>
+        </div>
+        <ul class="text-sm text-mint/70 space-y-2 ml-11 list-disc marker:text-jadebright">
+          <li>Klik tombol <strong class="text-white">Bayar dengan QRIS</strong> — sistem akan membuat kode QR khusus untuk pesananmu.</li>
+          <li>Buka aplikasi <strong class="text-white">GoPay, OVO, DANA, ShopeePay, LinkAja,</strong> atau <strong class="text-white">m-banking</strong> (BCA, Mandiri, BRI, dll).</li>
+          <li>Pilih menu <strong class="text-white">Scan QR / QRIS</strong> dan scan kode QR yang tampil di layar.</li>
+          <li>Konfirmasi pembayaran di aplikasi kamu.</li>
+        </ul>
+      </div>
+
+      <div class="glass border border-mint/10 rounded-2xl p-5">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-8 h-8 rounded-full bg-jadebright text-ink font-bold grid place-items-center text-sm">4</span>
+          <div><h4 class="text-white font-semibold">Akun Langsung Terkirim!</h4><p class="text-xs text-mint/50">Setelah pembayaran sukses, file akun otomatis terunduh.</p></div>
+        </div>
+        <ul class="text-sm text-mint/70 space-y-2 ml-11 list-disc marker:text-jadebright">
+          <li>Begitu pembayaran terkonfirmasi, file <strong class="text-white">.txt</strong> berisi akun akan otomatis terunduh.</li>
+          <li>File berisi: <strong class="text-white">email/username | password | catatan</strong> dan <strong class="text-white">SNK</strong> (Syarat &amp; Ketentuan).</li>
+          <li>Jika unduhan tidak otomatis, klik tombol <strong class="text-white">Unduh Lagi</strong> yang tersedia di layar.</li>
+          <li>Simpan file tersebut dan gunakan akun sesuai petunjuk yang diberikan.</li>
+        </ul>
+      </div>
+
+      <div class="glass border border-amber-400/20 bg-amber-400/5 rounded-2xl p-5">
+        <h4 class="text-white font-semibold flex items-center gap-2 mb-2"><i data-lucide="info" class="w-4 text-amber-400"></i> Penting!</h4>
+        <ul class="text-sm text-mint/70 space-y-1.5 ml-6 list-disc marker:text-amber-400">
+          <li>Jangan mengubah email atau password akun sebelum masa garansi habis (jika ada garansi).</li>
+          <li>Jika mengalami kendala, hubungi admin melalui kontak yang tertera di halaman Bantuan.</li>
+          <li>Semua transaksi diproses secara otomatis — 100% aman &amp; instan.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="p-5 border-t border-mint/10">
+      <button id="tutorialDone" class="w-full bg-jadebright text-ink font-semibold rounded-xl py-2.5 text-sm hover:brightness-110 transition">Mengerti, mulai belanja!</button>
+    </div>
+  </aside>
+
+  <!-- ============ BANTUAN DRAWER ============ -->
+  <div id="bantuanOverlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-60 hidden"></div>
+  <aside id="bantuanDrawer" class="drawer fixed top-0 right-0 z-70 h-screen w-[min(520px,100%)] glass border-l border-mint/10 translate-x-full flex flex-col">
+    <div class="flex items-center justify-between p-5 border-b border-mint/10">
+      <h3 class="font-serif text-xl text-white flex items-center gap-2"><i data-lucide="life-buoy" class="w-5 text-jadebright"></i> Bantuan</h3>
+      <button id="bantuanClose" class="grid place-items-center w-9 h-9 rounded-lg hover:bg-mint/5"><i data-lucide="x" class="w-5"></i></button>
+    </div>
+    <div id="bantuanBody" class="flex-1 overflow-y-auto p-5 space-y-6"><!-- isi dari JS --></div>
+  </aside>
+
+  <!-- ============ BILLING / QRIS DRAWER ============ -->
+  <div id="overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 hidden"></div>
+  <aside id="billDrawer" class="drawer fixed top-0 right-0 z-50 h-screen w-[min(440px,100%)] glass border-l border-mint/10 translate-x-full flex flex-col">
+    <div class="flex items-center justify-between p-5 border-b border-mint/10">
+      <h3 class="font-serif text-xl text-white flex items-center gap-2"><i data-lucide="receipt-text" class="w-5 text-jadebright"></i> Pembayaran</h3>
+      <button id="billClose" class="grid place-items-center w-9 h-9 rounded-lg hover:bg-mint/5"><i data-lucide="x" class="w-5"></i></button>
+    </div>
+    <div id="billBody" class="flex-1 overflow-y-auto p-5"></div>
+  </aside>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-3 z-[70] glass border border-mint/10 rounded-full px-5 py-3 text-sm font-medium flex items-center gap-2 opacity-0 pointer-events-none transition"></div>
+
+  <!-- ============ FLOATING SOCIAL BUTTON ============ -->
+  <div id="socFloat" class="fixed bottom-6 right-6 z-[65] hidden flex-col items-end">
+    <div id="socFloatPopout" class="flex flex-col gap-2 mb-3 pointer-events-none" style="opacity:0;transform:translateY(8px) scale(0.95);transition:opacity .2s ease,transform .2s ease">
+      <a id="socWa" target="_blank" rel="noopener" class="soc-item hidden items-center gap-3 px-4 py-3 rounded-2xl glass border border-mint/10 bg-green-500/15 text-green-400 hover:bg-green-500/25 text-sm font-medium whitespace-nowrap transition-all duration-200 hover:scale-105 translate-y-2 opacity-0" style="transition-delay:0ms"><i data-lucide="message-circle" class="w-[18px] shrink-0"></i><span>WhatsApp</span></a>
+
+      <a id="socTeleChannel" target="_blank" rel="noopener" class="soc-item hidden items-center gap-3 px-4 py-3 rounded-2xl glass border border-mint/10 bg-sky-500/15 text-sky-400 hover:bg-sky-500/25 text-sm font-medium whitespace-nowrap transition-all duration-200 hover:scale-105 translate-y-2 opacity-0" style="transition-delay:60ms"><i data-lucide="send" class="w-[18px] shrink-0"></i><span>Telegram Channel</span></a>
+
+      <a id="socTeleBot" target="_blank" rel="noopener" class="soc-item hidden items-center gap-3 px-4 py-3 rounded-2xl glass border border-mint/10 bg-sky-500/15 text-sky-400 hover:bg-sky-500/25 text-sm font-medium whitespace-nowrap transition-all duration-200 hover:scale-105 translate-y-2 opacity-0" style="transition-delay:120ms"><i data-lucide="message-square" class="w-[18px] shrink-0"></i><span>Telegram Bot</span></a>
+
+      <a id="socX" target="_blank" rel="noopener" class="soc-item hidden items-center gap-3 px-4 py-3 rounded-2xl glass border border-mint/10 bg-zinc-500/15 text-zinc-300 hover:bg-zinc-500/25 text-sm font-medium whitespace-nowrap transition-all duration-200 hover:scale-105 translate-y-2 opacity-0" style="transition-delay:180ms"><i data-lucide="twitter" class="w-[18px] shrink-0"></i><span>X (Twitter)</span></a>
+
+      <a id="socIg" target="_blank" rel="noopener" class="soc-item hidden items-center gap-3 px-4 py-3 rounded-2xl glass border border-mint/10 bg-pink-500/15 text-pink-400 hover:bg-pink-500/25 text-sm font-medium whitespace-nowrap transition-all duration-200 hover:scale-105 translate-y-2 opacity-0" style="transition-delay:240ms"><i data-lucide="camera" class="w-[18px] shrink-0"></i><span>Instagram</span></a>
+    </div>
+    <button id="socFloatBtn" class="soc-trigger w-14 h-14 rounded-full bg-jadebright text-ink shadow-lg shadow-jade/30 grid place-items-center hover:brightness-110 transition active:scale-90 relative">
+      <i data-lucide="message-circle" class="w-7" id="socFloatIcon"></i>
+    </button>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

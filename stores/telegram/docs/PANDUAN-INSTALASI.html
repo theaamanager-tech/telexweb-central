@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Panduan Instalasi Telegram Bot Store</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <style type="text/css">@page {
+size: A4;
+margin: 22mm 18mm;
+@bottom-center {
+content: "Halaman " counter(page) " dari " counter(pages);
+font-size: 9pt;
+color: #888;
+}
+}
+body {
+font-family: "DejaVu Sans", "Liberation Sans", sans-serif;
+font-size: 10.5pt;
+line-height: 1.55;
+color: #1f2937;
+}
+h1 {
+color: #111827;
+border-bottom: 3px solid #f59e0b;
+padding-bottom: 8px;
+margin-top: 28px;
+font-size: 22pt;
+page-break-after: avoid;
+}
+h2 {
+color: #b45309;
+margin-top: 24px;
+font-size: 16pt;
+page-break-after: avoid;
+border-left: 4px solid #f59e0b;
+padding-left: 10px;
+}
+h3 {
+color: #374151;
+font-size: 12.5pt;
+margin-top: 18px;
+page-break-after: avoid;
+}
+a { color: #b45309; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code {
+background: #f3f4f6;
+padding: 1px 5px;
+border-radius: 3px;
+font-family: "DejaVu Sans Mono", "Courier New", monospace;
+font-size: 9.5pt;
+color: #b45309;
+}
+pre {
+background: #1f2937;
+color: #f9fafb;
+padding: 12px 14px;
+border-radius: 6px;
+overflow-x: auto;
+font-size: 9pt;
+line-height: 1.45;
+page-break-inside: avoid;
+}
+pre code { background: none; color: inherit; padding: 0; }
+table {
+border-collapse: collapse;
+width: 100%;
+margin: 12px 0;
+page-break-inside: avoid;
+font-size: 9.5pt;
+}
+th, td {
+border: 1px solid #d1d5db;
+padding: 7px 10px;
+text-align: left;
+vertical-align: top;
+}
+th {
+background: #fef3c7;
+color: #78350f;
+font-weight: 600;
+}
+tr:nth-child(even) td { background: #fafafa; }
+blockquote {
+border-left: 4px solid #fbbf24;
+background: #fffbeb;
+padding: 10px 14px;
+margin: 14px 0;
+color: #78350f;
+border-radius: 0 4px 4px 0;
+}
+ul, ol { padding-left: 22px; }
+li { margin-bottom: 4px; }
+hr {
+border: none;
+border-top: 1px solid #e5e7eb;
+margin: 24px 0;
+}
+.toc-title { font-size: 14pt; color: #b45309; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Panduan Instalasi Telegram Bot Store</h1>
+</header>
+<h1 id="panduan-instalasi-pemakaian">📘 PANDUAN INSTALASI &amp;
+PEMAKAIAN</h1>
+<h1 id="telegram-bot-store">TELEGRAM BOT STORE</h1>
+<blockquote>
+<p><strong>Versi:</strong> 1.0 — Edisi Reseller / End-User
+<strong>Untuk:</strong> Pembeli/Penyewa Bot Store <strong>Estimasi waktu
+setup:</strong> 30 — 60 menit</p>
+</blockquote>
+<hr />
+<h2 id="daftar-isi">DAFTAR ISI</h2>
+<ol type="1">
+<li><a href="#1-sekilas-tentang-aplikasi">Sekilas tentang
+Aplikasi</a></li>
+<li><a href="#2-yang-harus-disiapkan-prasyarat">Yang Harus Disiapkan
+(Prasyarat)</a></li>
+<li><a href="#3-langkah-1--buat-database-di-supabase">Langkah 1 — Buat
+Database di Supabase</a></li>
+<li><a href="#4-langkah-2--buat-bot-telegram">Langkah 2 — Buat Bot
+Telegram</a></li>
+<li><a href="#5-langkah-3--daftar-pakasir-untuk-pembayaran-qris">Langkah
+3 — Daftar Pakasir untuk Pembayaran QRIS</a></li>
+<li><a href="#6-langkah-4--install-aplikasi-di-vps--server">Langkah 4 —
+Install Aplikasi di VPS / Server</a></li>
+<li><a href="#7-langkah-5--login--konfigurasi-admin-panel">Langkah 5 —
+Login &amp; Konfigurasi Admin Panel</a></li>
+<li><a href="#8-langkah-6--tambah-produk-varian--stok">Langkah 6 —
+Tambah Produk, Varian &amp; Stok</a></li>
+<li><a href="#9-langkah-7--set-callback-url-pakasir">Langkah 7 — Set
+Callback URL Pakasir</a></li>
+<li><a href="#10-langkah-8--uji-coba-end-to-end">Langkah 8 — Uji Coba
+End-to-End</a></li>
+<li><a href="#11-pemeliharaan--operasional-harian">Pemeliharaan &amp;
+Operasional Harian</a></li>
+<li><a href="#12-troubleshooting-error--solusinya">Troubleshooting
+(Error &amp; Solusinya)</a></li>
+<li><a href="#13-faq">FAQ</a></li>
+<li><a href="#14-kontak--dukungan">Kontak &amp; Dukungan</a></li>
+</ol>
+<hr />
+<h2 id="sekilas-tentang-aplikasi">1. SEKILAS TENTANG APLIKASI</h2>
+<p><strong>Telegram Bot Store</strong> adalah toko digital otomatis yang
+dijalankan lewat bot Telegram. Pelanggan memilih produk → bayar via QRIS
+Pakasir → produk digital (akun, voucher, key, dsb) terkirim otomatis ke
+chat mereka.</p>
+<p><strong>Komponen yang Anda dapat:</strong></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Komponen</th>
+<th>Fungsi</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>API Server</strong> (Node.js)</td>
+<td>Otak aplikasi — handle bot Telegram, API admin, scheduler
+pembayaran</td>
+</tr>
+<tr class="even">
+<td><strong>Admin Panel</strong> (web)</td>
+<td>Kelola produk, stok, order, pesan bot, pengaturan</td>
+</tr>
+<tr class="odd">
+<td><strong>Database PostgreSQL</strong></td>
+<td>Penyimpanan semua data</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Fitur utama:</strong></p>
+<ul>
+<li>✅ Katalog produk + varian (mis. produk “Netflix” dengan varian 1
+bulan, 3 bulan)</li>
+<li>✅ Manajemen stok otomatis (key/akun habis → varian otomatis
+nonaktif)</li>
+<li>✅ Pembayaran QRIS via Pakasir</li>
+<li>✅ Pengiriman produk otomatis setelah pembayaran sukses</li>
+<li>✅ Kupon diskon</li>
+<li>✅ Broadcast ke pelanggan</li>
+<li>✅ Notifikasi penjualan ke admin/channel</li>
+<li>✅ Blacklist user</li>
+<li>✅ Laporan keuangan (PDF/Excel/CSV)</li>
+<li>✅ Backup &amp; restore data</li>
+</ul>
+<hr />
+<h2 id="yang-harus-disiapkan-prasyarat">2. YANG HARUS DISIAPKAN
+(PRASYARAT)</h2>
+<p>Sebelum mulai, siapkan akun-akun &amp; resource berikut.
+<strong>Semua gratis untuk mulai.</strong></p>
+<h3 id="akun-yang-dibutuhkan">2.1 Akun yang dibutuhkan</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Akun</th>
+<th>Untuk apa</th>
+<th>Link daftar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><strong>Akun Telegram</strong></td>
+<td>Buat bot via <span class="citation" data-cites="BotFather">@BotFather</span></td>
+<td>(sudah punya kalau pakai Telegram)</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><strong>Akun Supabase</strong></td>
+<td>Database PostgreSQL gratis</td>
+<td>https://supabase.com</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><strong>Akun Pakasir</strong></td>
+<td>Gateway pembayaran QRIS</td>
+<td>https://pakasir.com</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><strong>VPS / Hosting Node.js</strong></td>
+<td>Untuk menjalankan aplikasi 24/7</td>
+<td>Lihat rekomendasi di bawah</td>
+</tr>
+</tbody>
+</table>
+<h3 id="spesifikasi-server-minimum">2.2 Spesifikasi server minimum</h3>
+<ul>
+<li><strong>OS:</strong> Ubuntu 22.04 / Debian 12 (64-bit)</li>
+<li><strong>RAM:</strong> 512 MB (rekomendasi 1 GB)</li>
+<li><strong>Disk:</strong> 5 GB</li>
+<li><strong>Bandwidth:</strong> unlimited (atau minimal 100
+GB/bulan)</li>
+<li><strong>Public IP</strong> atau domain (untuk callback Pakasir)</li>
+</ul>
+<p><strong>Rekomendasi VPS murah (mulai Rp 25rb/bulan):</strong></p>
+<ul>
+<li>Domainesia / Niagahoster / Idcloudhost (lokal Indonesia)</li>
+<li>Contabo VPS S (luar negeri, ~$6/bulan)</li>
+<li>DigitalOcean / Vultr / Linode</li>
+</ul>
+<h3 id="software-yang-akan-diinstal-di-server">2.3 Software yang akan
+diinstal di server</h3>
+<ul>
+<li>Node.js v20+ (dipasang otomatis lewat panduan)</li>
+<li>PM2 (untuk menjaga aplikasi tetap hidup)</li>
+</ul>
+<blockquote>
+<p>💡 <strong>Anda TIDAK perlu install PostgreSQL di server</strong>,
+karena database memakai Supabase (cloud).</p>
+</blockquote>
+<hr />
+<h2 id="langkah-1-buat-database-di-supabase">3. LANGKAH 1 — BUAT
+DATABASE DI SUPABASE</h2>
+<h3 id="daftar-buat-project">3.1 Daftar &amp; buat project</h3>
+<ol type="1">
+<li>Buka https://supabase.com → klik <strong>Start your project</strong>
+→ daftar (boleh login pakai GitHub).</li>
+<li>Setelah masuk dashboard → klik <strong>New Project</strong>.</li>
+<li>Isi:
+<ul>
+<li><strong>Name</strong>: <code>bot-store-saya</code> (bebas)</li>
+<li><strong>Database Password</strong>: <strong>buat password yang
+KUAT</strong> dan <strong>CATAT</strong> — Anda butuh ini nanti.</li>
+<li><strong>Region</strong>: pilih <strong>Singapore (Southeast
+Asia)</strong> untuk akses tercepat dari Indonesia</li>
+</ul></li>
+<li>Klik <strong>Create new project</strong> → tunggu ±2 menit.</li>
+</ol>
+<h3 id="jalankan-sql-schema">3.2 Jalankan SQL Schema</h3>
+<p>Saat masih di dashboard project Supabase:</p>
+<ol type="1">
+<li>Klik ikon <strong>SQL Editor</strong> di sidebar kiri.</li>
+<li>Klik tombol <strong>+ New query</strong>.</li>
+<li><strong>Copy-paste seluruh isi file <code>schema.sql</code></strong>
+(file ini ada di folder paket bot-store yang Anda terima).</li>
+<li>Klik tombol <strong>Run</strong> (▶) di kanan bawah, atau tekan
+<code>Ctrl+Enter</code>.</li>
+<li>Lihat di bawah harus ada tulisan: <strong>Success. No rows
+returned</strong> ✅</li>
+</ol>
+<h3 id="verifikasi-tabel-sudah-dibuat">3.3 Verifikasi tabel sudah
+dibuat</h3>
+<ol type="1">
+<li><p>Klik ikon <strong>Table Editor</strong> di sidebar.</p></li>
+<li><p>Anda harus melihat 8 tabel:</p>
+<ul>
+<li><code>bot_messages</code></li>
+<li><code>coupons</code></li>
+<li><code>orders</code></li>
+<li><code>products</code></li>
+<li><code>stock_items</code></li>
+<li><code>store_settings</code></li>
+<li><code>telegram_users</code></li>
+<li><code>variants</code></li>
+</ul></li>
+</ol>
+<h3 id="ambil-connection-string">3.4 Ambil Connection String</h3>
+<ol type="1">
+<li><p>Klik ikon <strong>⚙ Project Settings</strong> (kiri bawah) →
+<strong>Database</strong>.</p></li>
+<li><p>Cari section <strong>Connection string</strong> → pilih tab
+<strong>URI</strong>.</p></li>
+<li><p>Anda akan lihat format seperti:</p>
+<pre><code>postgresql://postgres:[YOUR-PASSWORD]@db.xxxxxxxxxxxx.supabase.co:5432/postgres</code></pre></li>
+<li><p><strong>Salin</strong> string tersebut dan <strong>ganti
+<code>[YOUR-PASSWORD]</code></strong> dengan password yang Anda buat di
+langkah 3.1.</p></li>
+<li><p><strong>Tambahkan</strong> <code>?sslmode=require</code> di
+paling akhir.</p>
+<p>✅ Hasil akhir contoh:</p>
+<pre><code>postgresql://postgres:KataSandiKuat123@db.abcdxyz.supabase.co:5432/postgres?sslmode=require</code></pre></li>
+<li><p><strong>Simpan baik-baik</strong> — akan dipakai di Langkah
+4.</p></li>
+</ol>
+<blockquote>
+<p>⚠️ <strong>JANGAN bagikan connection string ini ke siapa
+pun.</strong> Itu setara kunci master database Anda.</p>
+</blockquote>
+<hr />
+<h2 id="langkah-2-buat-bot-telegram">4. LANGKAH 2 — BUAT BOT
+TELEGRAM</h2>
+<h3 id="bicara-ke-botfather">4.1 Bicara ke <span class="citation" data-cites="BotFather">@BotFather</span></h3>
+<ol type="1">
+<li><p>Buka Telegram → cari <strong><span class="citation" data-cites="BotFather">@BotFather</span></strong> (ada centang biru) →
+klik <strong>Start</strong>.</p></li>
+<li><p>Kirim perintah: <code>/newbot</code></p></li>
+<li><p>BotFather akan tanya <strong>nama bot</strong> (display name) —
+contoh: <code>Toko Digital Saya</code></p></li>
+<li><p>Lalu tanya <strong>username bot</strong> — harus diakhiri
+<code>bot</code>. Contoh: <code>toko_digital_saya_bot</code></p></li>
+<li><p>BotFather akan kirim <strong>token</strong> seperti ini:</p>
+<pre><code>1234567890:ABCdefGHIjklMNOpqrSTUvwxYZ-1234567</code></pre></li>
+<li><p><strong>SIMPAN TOKEN INI</strong> — akan dipakai nanti di admin
+panel.</p></li>
+</ol>
+<h3 id="hias-bot-anda-opsional-tapi-disarankan">4.2 Hias bot Anda
+(opsional tapi disarankan)</h3>
+<p>Masih di chat dengan <span class="citation" data-cites="BotFather">@BotFather</span>, kirim perintah:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Perintah</th>
+<th>Fungsi</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>/setdescription</code></td>
+<td>Deskripsi bot (muncul di chat baru)</td>
+</tr>
+<tr class="even">
+<td><code>/setabouttext</code></td>
+<td>Teks “About” (muncul di profil bot)</td>
+</tr>
+<tr class="odd">
+<td><code>/setuserpic</code></td>
+<td>Foto profil bot</td>
+</tr>
+<tr class="even">
+<td><code>/setcommands</code></td>
+<td>Daftar perintah (recommended, lihat di bawah)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Untuk <code>/setcommands</code>, paste daftar
+berikut:</strong></p>
+<pre><code>start - Mulai bot dan lihat menu utama
+menu - Tampilkan daftar produk
+help - Pusat bantuan</code></pre>
+<h3 id="cari-chat-id-admin-untuk-notifikasi">4.3 Cari Chat ID admin
+(untuk notifikasi)</h3>
+<ol type="1">
+<li>Cari <strong><span class="citation" data-cites="userinfobot">@userinfobot</span></strong> di Telegram → klik
+<strong>Start</strong>.</li>
+<li>Bot akan balas dengan <strong>ID</strong> Anda — contoh:
+<code>123456789</code>.</li>
+<li><strong>Simpan ID ini</strong> — akan dimasukkan ke admin panel agar
+Anda dapat notifikasi setiap ada penjualan.</li>
+</ol>
+<h3 id="opsional-buat-channel-notifikasi-penjualan">4.4 (Opsional) Buat
+channel notifikasi penjualan</h3>
+<p>Kalau Anda ingin notifikasi penjualan masuk ke channel Telegram:</p>
+<ol type="1">
+<li>Buat <strong>channel</strong> baru di Telegram.</li>
+<li>Tambahkan bot Anda sebagai <strong>administrator</strong>
+channel.</li>
+<li>Catat <strong>username channel</strong> (<code>@namaChannel</code>)
+atau <strong>chat ID</strong> (<code>-100xxxxxxxxx</code>).</li>
+</ol>
+<hr />
+<h2 id="langkah-3-daftar-pakasir-untuk-pembayaran-qris">5. LANGKAH 3 —
+DAFTAR PAKASIR UNTUK PEMBAYARAN QRIS</h2>
+<p>Pakasir adalah payment gateway lokal yang mendukung QRIS. Bot Anda
+akan generate QR otomatis dan pelanggan tinggal scan.</p>
+<h3 id="daftar-akun-pakasir">5.1 Daftar akun Pakasir</h3>
+<ol type="1">
+<li>Buka https://pakasir.com → klik <strong>Daftar</strong>.</li>
+<li>Lengkapi data: nama, email, nomor HP, KTP/usaha (sesuai persyaratan
+Pakasir).</li>
+<li>Verifikasi email &amp; dokumen.</li>
+<li>Tunggu approval (biasanya 1×24 jam).</li>
+</ol>
+<h3 id="buat-proyek-pakasir">5.2 Buat Proyek Pakasir</h3>
+<ol type="1">
+<li>Login ke dashboard Pakasir.</li>
+<li>Buat proyek baru → isi nama toko Anda.</li>
+<li>Pakasir akan kasih <strong>Slug Proyek</strong> (contoh:
+<code>toko-saya-12345</code>) — <strong>catat</strong>.</li>
+<li>Di halaman detail proyek, ada <strong>API Key</strong> —
+<strong>catat juga</strong>.</li>
+</ol>
+<h3 id="tentukan-webhook-secret-opsional-tapi-disarankan">5.3 Tentukan
+Webhook Secret (opsional tapi disarankan)</h3>
+<p>Buat string acak panjang sendiri (contoh:
+<code>wh_secret_aksdjflaksjdf99</code>). Ini akan kita pakai untuk
+verifikasi webhook Pakasir.</p>
+<blockquote>
+<p>💡 Callback URL Pakasir akan kita atur <strong>setelah</strong>
+aplikasi online (di Langkah 9).</p>
+</blockquote>
+<hr />
+<h2 id="langkah-4-install-aplikasi-di-vps-server">6. LANGKAH 4 — INSTALL
+APLIKASI DI VPS / SERVER</h2>
+<blockquote>
+<p>🚀 <strong>CARA TERCEPAT — Auto Installer (rekomendasi)</strong></p>
+<p>Skrip <code>install.sh</code> akan handle SEMUA otomatis: install
+Node.js, isi <code>.env</code> interaktif, apply schema ke Supabase,
+setup PM2/systemd, buka firewall, dan kasih ringkasan akhir.</p>
+<p><strong>3 langkah saja:</strong></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> root@IP-SERVER-ANDA</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzf</span> bot-store-deploy-updated.tar.gz</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> bot-store <span class="kw">&amp;&amp;</span> <span class="fu">bash</span> install.sh</span></code></pre></div>
+<p>Skrip akan menanyakan secara interaktif: - DATABASE_URL (Supabase
+connection string) - Username &amp; password admin (atau auto-generate)
+- Port aplikasi - Cara menjalankan (PM2 / systemd / nohup)</p>
+<p>Selesai dalam 5–10 menit. Kalau ingin manual, ikuti langkah 6.1–6.9
+di bawah.</p>
+</blockquote>
+<hr />
+<h3 id="cara-manual-kalau-ingin-kontrol-penuh">📜 CARA MANUAL (kalau
+ingin kontrol penuh)</h3>
+<h3 id="login-ke-server">6.1 Login ke server</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> root@IP-SERVER-ANDA</span></code></pre></div>
+<h3 id="install-node.js-v20">6.2 Install Node.js v20</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://deb.nodesource.com/setup_20.x <span class="kw">|</span> <span class="fu">bash</span> <span class="at">-</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">apt-get</span> install <span class="at">-y</span> nodejs</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">-v</span>   <span class="co"># harus tampil v20.x.x</span></span></code></pre></div>
+<h3 id="install-pm2-untuk-auto-restart">6.3 Install PM2 (untuk
+auto-restart)</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">-g</span> pm2</span></code></pre></div>
+<h3 id="upload-paket-bot-store-ke-server">6.4 Upload paket bot-store ke
+server</h3>
+<p>Dari komputer Anda, upload file
+<code>bot-store-deploy-updated.tar.gz</code> ke server:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dari komputer lokal Anda (bukan dari server):</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> bot-store-deploy-updated.tar.gz root@IP-SERVER:/root/</span></code></pre></div>
+<p>Atau pakai SFTP client (FileZilla, WinSCP, dll).</p>
+<h3 id="extract-paket">6.5 Extract paket</h3>
+<p>Di server:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /root</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzf</span> bot-store-deploy-updated.tar.gz</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> bot-store</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span></span></code></pre></div>
+<p>Anda harus lihat: <code>api-server/</code>, <code>artifacts/</code>,
+<code>start.sh</code>, <code>.env</code>,
+<code>instalasi.txt</code>.</p>
+<h3 id="edit-file-.env">6.6 Edit file <code>.env</code></h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> .env</span></code></pre></div>
+<p>Isi seperti contoh berikut (ganti dengan data Anda):</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="va">DATABASE_URL</span><span class="op">=</span>postgresql://postgres:KataSandiKuat123@db.abcdxyz.supabase.co:5432/postgres<span class="pp">?</span>sslmode=require</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="va">ADMIN_USERNAME</span><span class="op">=</span>admin</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="va">ADMIN_PASSWORD</span><span class="op">=</span>password_admin_kuat_anda</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="va">SESSION_SECRET</span><span class="op">=</span>string_acak_minimal_32_karakter_xxxxxxxxxx</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="va">PORT</span><span class="op">=</span>3000</span></code></pre></div>
+<p><strong>Penjelasan:</strong></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variabel</th>
+<th>Isi dengan</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>DATABASE_URL</code></td>
+<td>Connection string Supabase dari Langkah 3.4</td>
+</tr>
+<tr class="even">
+<td><code>ADMIN_USERNAME</code></td>
+<td>Username untuk login admin panel (mis. <code>admin</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>ADMIN_PASSWORD</code></td>
+<td>Password untuk login admin panel — <strong>buat yang
+kuat</strong></td>
+</tr>
+<tr class="even">
+<td><code>SESSION_SECRET</code></td>
+<td>String acak min 32 karakter untuk keamanan session</td>
+</tr>
+<tr class="odd">
+<td><code>PORT</code></td>
+<td>Port aplikasi (default <code>3000</code>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tips bikin SESSION_SECRET acak:</strong></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openssl</span> rand <span class="at">-hex</span> 32</span></code></pre></div>
+<p>Copy outputnya ke <code>SESSION_SECRET</code>.</p>
+<p>Simpan: <code>Ctrl+O</code>, <code>Enter</code>, lalu
+<code>Ctrl+X</code>.</p>
+<h3 id="jalankan-aplikasi">6.7 Jalankan aplikasi</h3>
+<p><strong>Test dulu:</strong></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> start.sh</span></code></pre></div>
+<p>Kalau muncul <code>✓ Server berjalan di port 3000</code> → sukses.
+Tekan <code>Ctrl+C</code> untuk berhenti.</p>
+<p><strong>Jalankan permanen via PM2:</strong></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pm2</span> start start.sh <span class="at">--name</span> bot-store <span class="at">--interpreter</span> bash</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pm2</span> save</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pm2</span> startup</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># (jalankan command yang ditampilkan PM2 untuk auto-start saat reboot)</span></span></code></pre></div>
+<p><strong>Cek status:</strong></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pm2</span> status</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pm2</span> logs bot-store</span></code></pre></div>
+<h3 id="buka-firewall-port-3000">6.8 Buka firewall (port 3000)</h3>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ufw</span> allow 3000/tcp</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ufw</span> allow 22/tcp</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ufw</span> enable</span></code></pre></div>
+<h3 id="akses-admin-panel">6.9 Akses admin panel</h3>
+<p>Buka browser → <code>http://IP-SERVER-ANDA:3000</code></p>
+<p>Login dengan <code>ADMIN_USERNAME</code> &amp;
+<code>ADMIN_PASSWORD</code> yang Anda set di <code>.env</code>.</p>
+<blockquote>
+<p>🔒 <strong>PRODUKSI: pasang HTTPS</strong> dengan reverse proxy Nginx
++ Let’s Encrypt. Contoh konfigurasi ada di bagian <a href="#11-pemeliharaan--operasional-harian">Pemeliharaan</a>.</p>
+</blockquote>
+<hr />
+<h2 id="langkah-5-login-konfigurasi-admin-panel">7. LANGKAH 5 — LOGIN
+&amp; KONFIGURASI ADMIN PANEL</h2>
+<h3 id="masuk-halaman-settings">7.1 Masuk halaman Settings</h3>
+<p>Setelah login, klik menu <strong>Settings</strong> di sidebar
+kiri.</p>
+<h3 id="isi-pengaturan-utama">7.2 Isi pengaturan utama</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Isi dengan</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Nama Toko</strong> (<code>store_name</code>)</td>
+<td>Nama toko Anda, mis. <code>Toko Digital Maju Jaya</code></td>
+</tr>
+<tr class="even">
+<td><strong>Token Bot Telegram</strong>
+(<code>telegram_bot_token</code>)</td>
+<td>Token dari BotFather di Langkah 4.1</td>
+</tr>
+<tr class="odd">
+<td><strong>Slug Pakasir</strong> (<code>pakasir_slug</code>)</td>
+<td>Slug proyek dari Langkah 5.2</td>
+</tr>
+<tr class="even">
+<td><strong>API Key Pakasir</strong> (<code>pakasir_api_key</code>)</td>
+<td>API Key dari Langkah 5.2</td>
+</tr>
+<tr class="odd">
+<td><strong>URL Server</strong> (<code>server_base_url</code>)</td>
+<td><code>http://IP-SERVER:3000</code> atau
+<code>https://domain-anda.com</code></td>
+</tr>
+<tr class="even">
+<td><strong>Username Admin Telegram</strong>
+(<code>store_admin_contact</code>)</td>
+<td>Username Anda di Telegram (tanpa @) — untuk pelanggan kontak
+admin</td>
+</tr>
+<tr class="odd">
+<td><strong>Chat ID Admin</strong>
+(<code>admin_telegram_chat_id</code>)</td>
+<td>ID dari Langkah 4.3</td>
+</tr>
+<tr class="even">
+<td><strong>Channel Penjualan</strong>
+(<code>sales_channel_id</code>)</td>
+<td>(Opsional) <code>@namaChannel</code> atau
+<code>-100xxxxxxxxx</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Waktu Kadaluarsa Pembayaran</strong>
+(<code>payment_expiry_minutes</code>)</td>
+<td><code>10</code> (menit) — pembayaran auto-cancel kalau lewat</td>
+</tr>
+<tr class="even">
+<td><strong>Batas Stok Rendah</strong>
+(<code>stock_low_threshold</code>)</td>
+<td><code>5</code> — alert kalau stok di bawah angka ini</td>
+</tr>
+<tr class="odd">
+<td><strong>Pembayaran Aktif</strong>
+(<code>payment_enabled</code>)</td>
+<td><code>true</code></td>
+</tr>
+<tr class="even">
+<td><strong>Kupon Aktif</strong> (<code>coupon_enabled</code>)</td>
+<td><code>true</code> atau <code>false</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Webhook Secret</strong> (<code>webhook_secret</code>)</td>
+<td>String acak dari Langkah 5.3</td>
+</tr>
+</tbody>
+</table>
+<p>Klik <strong>Simpan</strong> di setiap section.</p>
+<h3 id="restart-bot">7.3 Restart bot</h3>
+<p>Setelah semua diisi, kembali ke <strong>Settings</strong> → klik
+tombol <strong>Restart Bot</strong> (atau tunggu beberapa detik — bot
+akan auto-detect token).</p>
+<p>Cek status bot di pojok atas — harus <strong>🟢 Bot
+Aktif</strong>.</p>
+<h3 id="test-bot">7.4 Test bot</h3>
+<p>Buka Telegram → cari username bot Anda → klik <strong>Start</strong>.
+Bot harus balas dengan pesan welcome.</p>
+<hr />
+<h2 id="langkah-6-tambah-produk-varian-stok">8. LANGKAH 6 — TAMBAH
+PRODUK, VARIAN &amp; STOK</h2>
+<h3 id="tambah-produk">8.1 Tambah produk</h3>
+<ol type="1">
+<li>Sidebar → <strong>Products</strong> → klik <strong>+ Tambah
+Produk</strong>.</li>
+<li>Isi: nama, deskripsi, upload gambar (opsional).</li>
+<li>Aktifkan toggle <strong>Aktif</strong>.</li>
+<li><strong>Simpan</strong>.</li>
+</ol>
+<h3 id="tambah-varian-paket-harga">8.2 Tambah varian (paket harga)</h3>
+<ol type="1">
+<li>Klik produk yang baru dibuat → tab <strong>Varian</strong>.</li>
+<li>Klik <strong>+ Tambah Varian</strong>.</li>
+<li>Isi:
+<ul>
+<li><strong>Nama varian</strong> (mis. <code>1 Bulan</code>)</li>
+<li><strong>Harga</strong> (dalam Rupiah, mis. <code>25000</code>)</li>
+<li><strong>S&amp;K</strong> (syarat &amp; ketentuan, opsional)</li>
+</ul></li>
+<li><strong>Simpan</strong>.</li>
+</ol>
+<blockquote>
+<p>Satu produk bisa punya banyak varian (1 bulan, 3 bulan, 1 tahun,
+dll).</p>
+</blockquote>
+<h3 id="isi-stok-varian">8.3 Isi stok varian</h3>
+<ol type="1">
+<li><p>Sidebar → <strong>Manajemen Stok</strong>.</p></li>
+<li><p>Pilih varian → klik <strong>Tambah Stok</strong>.</p></li>
+<li><p>Paste isi stok (akun, key, voucher, dll) — <strong>satu item per
+baris</strong>:</p>
+<pre><code>email1@gmail.com|password1
+email2@gmail.com|password2
+email3@gmail.com|password3</code></pre></li>
+<li><p><strong>Simpan</strong>.</p></li>
+</ol>
+<p>Setiap order yang sukses akan <strong>auto-pop</strong> satu baris
+stok ke pelanggan, dan stok berkurang otomatis.</p>
+<h3 id="opsional-buat-kupon-diskon">8.4 (Opsional) Buat kupon
+diskon</h3>
+<p>Sidebar → <strong>Kupon &amp; Diskon</strong> → <strong>+ Tambah
+Kupon</strong>:</p>
+<ul>
+<li><strong>Kode</strong>: <code>HEMAT10</code> (yang akan diketik
+pelanggan)</li>
+<li><strong>Tipe diskon</strong>: persen / nominal</li>
+<li><strong>Nilai</strong>: <code>10</code> (artinya 10% atau Rp 10.000
+tergantung tipe)</li>
+<li><strong>Min. order</strong>: <code>0</code> (atau minimal Rp
+tertentu)</li>
+<li><strong>Maks. pemakaian</strong>: <code>100</code> (kosongkan =
+unlimited)</li>
+<li><strong>Berlaku sampai</strong>: pilih tanggal</li>
+<li><strong>Aktif</strong>: ✅</li>
+</ul>
+<h3 id="opsional-edit-pesan-bot">8.5 (Opsional) Edit pesan bot</h3>
+<p>Sidebar → <strong>Bot Messages</strong> untuk customize teks:
+welcome, header produk, sukses bayar, expired, dll. Gunakan placeholder
+<code>{store_name}</code> untuk auto-isi nama toko.</p>
+<hr />
+<h2 id="langkah-7-set-callback-url-pakasir">9. LANGKAH 7 — SET CALLBACK
+URL PAKASIR</h2>
+<p>Agar pembayaran otomatis terdeteksi, Pakasir perlu kirim notifikasi
+(webhook) ke server Anda.</p>
+<ol type="1">
+<li><p>Login ke dashboard <strong>Pakasir</strong>.</p></li>
+<li><p>Buka detail proyek → cari section <strong>Callback URL</strong>
+atau <strong>Webhook URL</strong>.</p></li>
+<li><p>Isi dengan:</p>
+<pre><code>https://domain-anda.com/api/webhook/pakasir?secret=WEBHOOK_SECRET_ANDA</code></pre>
+<p>Atau kalau belum pakai domain:</p>
+<pre><code>http://IP-SERVER:3000/api/webhook/pakasir?secret=WEBHOOK_SECRET_ANDA</code></pre>
+<p>Ganti <code>WEBHOOK_SECRET_ANDA</code> dengan nilai dari Langkah 5.3
+/ 7.2.</p></li>
+<li><p><strong>Simpan</strong>.</p></li>
+</ol>
+<blockquote>
+<p>⚠️ Pakasir biasanya <strong>mengharuskan HTTPS</strong> di
+production. Pasang SSL dulu (lihat Bagian 11).</p>
+</blockquote>
+<hr />
+<h2 id="langkah-8-uji-coba-end-to-end">10. LANGKAH 8 — UJI COBA
+END-TO-END</h2>
+<h3 id="skenario-test">Skenario test:</h3>
+<ol type="1">
+<li><strong>Tambah produk test</strong> — <code>Produk Demo</code>
+dengan varian <code>Test 1000</code> harga <code>Rp 1.000</code>.</li>
+<li><strong>Isi stok 1 baris</strong> —
+<code>INI_PRODUK_TEST_1</code>.</li>
+<li>Buka Telegram → bot Anda → ketik <code>/start</code>.</li>
+<li>Klik <strong>Lihat Produk</strong> → pilih <code>Produk Demo</code>
+→ varian → <strong>Beli</strong>.</li>
+<li>Bot kirim <strong>QR Code</strong> → scan &amp; bayar dengan
+e-wallet QRIS apa saja (DANA/OVO/GoPay/dll).</li>
+<li>Setelah bayar, bot harus:
+<ul>
+<li>Kirim pesan <strong>“Pembayaran berhasil!”</strong></li>
+<li>Kirim isi stok (<code>INI_PRODUK_TEST_1</code>)</li>
+</ul></li>
+<li>Cek admin panel → <strong>Orders</strong> → status harus
+<strong>paid/completed</strong>.</li>
+<li>Cek <strong>Manajemen Stok</strong> → stok berkurang 1.</li>
+<li>Anda harus dapat notifikasi DM dari bot di Telegram (kalau Chat ID
+admin sudah diisi).</li>
+</ol>
+<h3 id="kalau-semua-ok-bot-anda-siap-dipakai-jualan">✅ Kalau semua OK →
+bot Anda siap dipakai jualan!</h3>
+<hr />
+<h2 id="pemeliharaan-operasional-harian">11. PEMELIHARAAN &amp;
+OPERASIONAL HARIAN</h2>
+<h3 id="pasang-https-sangat-disarankan">11.1 Pasang HTTPS (sangat
+disarankan)</h3>
+<p>Install Nginx + Let’s Encrypt:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">apt</span> install <span class="at">-y</span> nginx certbot python3-certbot-nginx</span></code></pre></div>
+<p>Buat file <code>/etc/nginx/sites-available/bot-store</code>:</p>
+<pre class="nginx"><code>server {
+    listen 80;
+    server_name domain-anda.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection &quot;upgrade&quot;;
+    }
+}</code></pre>
+<p>Aktifkan &amp; dapatkan SSL:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> /etc/nginx/sites-available/bot-store /etc/nginx/sites-enabled/</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nginx</span> <span class="at">-t</span> <span class="kw">&amp;&amp;</span> <span class="ex">systemctl</span> reload nginx</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="ex">certbot</span> <span class="at">--nginx</span> <span class="at">-d</span> domain-anda.com</span></code></pre></div>
+<p>Setelah itu update <strong>URL Server</strong> di admin panel →
+<code>https://domain-anda.com</code> dan callback Pakasir juga jadi
+HTTPS.</p>
+<h3 id="backup-data-berkala">11.2 Backup data berkala</h3>
+<p><strong>Cara 1 — via admin panel:</strong> - Sidebar →
+<strong>Settings</strong> → <strong>Export → Backup</strong> → download
+file JSON.</p>
+<p><strong>Cara 2 — via Supabase:</strong> - Dashboard Supabase →
+<strong>Database</strong> → <strong>Backups</strong> → bisa download
+otomatis (di plan free, retensi 7 hari).</p>
+<p><strong>Cara 3 — manual SQL dump:</strong></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pg_dump</span> <span class="st">&#39;postgresql://postgres:PASSWORD@db.xxx.supabase.co:5432/postgres&#39;</span> <span class="op">&gt;</span> backup-<span class="va">$(</span><span class="fu">date</span> +%F<span class="va">)</span>.sql</span></code></pre></div>
+<p>Saran: backup minimal <strong>1× seminggu</strong> ke Google Drive /
+Dropbox.</p>
+<h3 id="update-aplikasi-kalau-ada-versi-baru">11.3 Update aplikasi
+(kalau ada versi baru)</h3>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /root</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># backup .env dulu!</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> bot-store/.env env-backup</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># extract paket baru</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzf</span> bot-store-deploy-updated-NEW.tar.gz</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># kembalikan .env</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> env-backup bot-store/.env</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co"># restart</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="ex">pm2</span> restart bot-store</span></code></pre></div>
+<h3 id="monitoring">11.4 Monitoring</h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pm2</span> status              <span class="co"># cek apakah aplikasi hidup</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pm2</span> logs bot-store      <span class="co"># lihat log real-time</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pm2</span> monit               <span class="co"># dashboard CPU/RAM</span></span></code></pre></div>
+<h3 id="restart-aplikasi">11.5 Restart aplikasi</h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pm2</span> restart bot-store</span></code></pre></div>
+<h3 id="stop-aplikasi">11.6 Stop aplikasi</h3>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pm2</span> stop bot-store</span></code></pre></div>
+<hr />
+<h2 id="troubleshooting-error-solusinya">12. TROUBLESHOOTING (ERROR
+&amp; SOLUSINYA)</h2>
+<h3 id="cannot-connect-to-database">❌ “Cannot connect to database”</h3>
+<p><strong>Penyebab:</strong> <code>DATABASE_URL</code> salah atau
+Supabase belum mengizinkan koneksi.</p>
+<p><strong>Solusi:</strong> - Pastikan password di
+<code>DATABASE_URL</code> benar. - Pastikan ada
+<code>?sslmode=require</code> di akhir. - Cek di Supabase:
+<strong>Settings → Database → Connection pooler</strong> — pakai mode
+<strong>Session</strong>.</p>
+<h3 id="relation-orders-does-not-exist">❌ “relation ‘orders’ does not
+exist”</h3>
+<p><strong>Penyebab:</strong> SQL schema belum dijalankan di
+Supabase.</p>
+<p><strong>Solusi:</strong> Ulangi Langkah 3.2.</p>
+<h3 id="bot-tidak-balas-saat-di-start">❌ Bot tidak balas saat
+di-/start</h3>
+<p><strong>Penyebab umum:</strong> - Token bot salah. - Bot belum
+di-restart setelah simpan token. - Bot sudah dipakai di server lain (1
+token = 1 server).</p>
+<p><strong>Solusi:</strong> - Cek log: <code>pm2 logs bot-store</code> -
+Cari pesan <code>&quot;Bot started&quot;</code> atau error. - Klik <strong>Restart
+Bot</strong> di admin panel.</p>
+<h3 id="pembayaran-sukses-tapi-bot-tidak-kirim-produk">❌ Pembayaran
+sukses tapi bot tidak kirim produk</h3>
+<p><strong>Penyebab:</strong> Webhook Pakasir tidak masuk ke server.</p>
+<p><strong>Solusi:</strong> - Cek <strong>Callback URL</strong> di
+Pakasir — harus <code>https://...</code> (production wajib HTTPS). - Cek
+log: <code>pm2 logs bot-store | grep webhook</code>. - Pastikan port
+80/443 terbuka di firewall. - Pastikan <code>webhook_secret</code> di
+Pakasir = nilai di admin panel.</p>
+<h3 id="upload-gambar-gagal">❌ Upload gambar gagal</h3>
+<p><strong>Penyebab:</strong> Folder upload tidak writable.</p>
+<p><strong>Solusi:</strong> Tambahkan ke <code>.env</code>:</p>
+<pre><code>ASSETS_DIR=/tmp/bot-assets</code></pre>
+<p>Lalu <code>pm2 restart bot-store</code>.</p>
+<h3 id="port-3000-already-in-use">❌ Port 3000 already in use</h3>
+<p><strong>Solusi:</strong> Ubah <code>PORT</code> di <code>.env</code>
+ke port lain (mis. <code>3030</code>), restart.</p>
+<h3 id="out-of-memory">❌ “Out of memory”</h3>
+<p><strong>Solusi:</strong> Upgrade RAM VPS, atau tambah swap:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fallocate</span> <span class="at">-l</span> 1G /swapfile <span class="kw">&amp;&amp;</span> <span class="fu">chmod</span> 600 /swapfile</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mkswap</span> /swapfile <span class="kw">&amp;&amp;</span> <span class="ex">swapon</span> /swapfile</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&#39;/swapfile none swap sw 0 0&#39;</span> <span class="op">&gt;&gt;</span> /etc/fstab</span></code></pre></div>
+<hr />
+<h2 id="faq">13. FAQ</h2>
+<p><strong>Q: Apakah saya bisa pakai database lain selain
+Supabase?</strong> A: Bisa. App ini pakai PostgreSQL. Bisa pakai Neon,
+Railway, ElephantSQL, atau PostgreSQL self-hosted. Cukup ganti
+<code>DATABASE_URL</code>.</p>
+<p><strong>Q: Apakah bisa jalankan beberapa bot di 1 server?</strong> A:
+Bisa. Salin folder <code>bot-store</code> ke nama lain
+(<code>bot-store-2</code>), ubah <code>PORT</code> di
+<code>.env</code>-nya, jalankan dengan PM2 nama berbeda.</p>
+<p><strong>Q: Apakah bot bisa multi-bahasa?</strong> A: Bahasa pesan bot
+bisa di-edit lewat menu <strong>Bot Messages</strong> di admin
+panel.</p>
+<p><strong>Q: Saya lupa password admin?</strong> A: Edit
+<code>.env</code> di server → ubah <code>ADMIN_PASSWORD</code> →
+restart. Tidak perlu reset database.</p>
+<p><strong>Q: Apakah Supabase free tier cukup?</strong> A: Cukup untuk
+mulai. Free tier: 500 MB DB, 2 GB transfer/bulan. Bisa di-upgrade kapan
+saja.</p>
+<p><strong>Q: Berapa biaya transaksi Pakasir?</strong> A: Cek di
+pakasir.com — biasanya MDR QRIS sekitar 0.7%.</p>
+<p><strong>Q: Apakah saya bisa pakai gateway lain selain
+Pakasir?</strong> A: Versi ini terkunci ke Pakasir. Untuk gateway lain,
+hubungi developer.</p>
+<hr />
+<h2 id="kontak-dukungan">14. KONTAK &amp; DUKUNGAN</h2>
+<p>Jika ada kendala teknis di luar dokumen ini, hubungi:</p>
+<ul>
+<li><strong>Telegram:</strong> <em>(diisi oleh penjual)</em></li>
+<li><strong>WhatsApp:</strong> <em>(diisi oleh penjual)</em></li>
+<li><strong>Email:</strong> <em>(diisi oleh penjual)</em></li>
+</ul>
+<hr />
+<blockquote>
+<p><strong>Selamat berjualan!</strong> 🚀</p>
+<p>Dokumen ini boleh di-customize ulang dengan logo &amp; kontak Anda
+sendiri sebelum diberikan ke pelanggan.</p>
+</blockquote>
+</body>
+</html>

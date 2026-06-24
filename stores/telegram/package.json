@@ -1,0 +1,1 @@
+{"name":"telegram-bot-store","private":true,"scripts":{"start":"node --max-old-space-size=512 api-server/dist/index.mjs"}}

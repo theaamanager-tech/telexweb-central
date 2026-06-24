@@ -1,0 +1,369 @@
+
+/* ===== SHADCNUIKIT ECOMMERCE STYLE OVERRIDES ===== */
+
+/* Modern glassmorphism cards */
+[class*="bg-card"] {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Welcome banner gradient */
+.welcome-banner {
+  background: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(262 83% 58%) 50%, hsl(280 87% 62%) 100%);
+  border-radius: 1rem;
+  padding: 1.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  border: none !important;
+}
+
+.welcome-banner::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.welcome-banner::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: 10%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
+
+/* Card hover lift effect */
+[class*="hover\:border-"] {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+[class*="hover\:border-"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.3), 0 0 15px -3px rgba(139, 92, 246, 0.15);
+}
+
+/* Better badge styles */
+[class*="rounded-full"][class*="text-xs"][class*="font-bold"] {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Sidebar smooth transitions */
+aside nav a {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Better table row hover */
+tr:hover td {
+  transition: background-color 0.15s ease;
+}
+
+/* Stats card number animation */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+[class*="text-xl"][class*="font-bold"],
+[class*="text-3xl"][class*="font-bold"] {
+  animation: countUp 0.5s ease-out;
+}
+
+/* Chart area smooth */
+.recharts-wrapper {
+  border-radius: 0.75rem;
+}
+
+/* Progress bar animations */
+[class*="bg-primary"][role="progressbar"],
+[class*="bg-green"][role="progressbar"],
+[class*="bg-yellow"][role="progressbar"],
+[class*="bg-red"][role="progressbar"] {
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Improved focus rings */
+*:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
+
+/* Button press effect */
+button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Subtle page enter animation */
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+main > div {
+  animation: pageEnter 0.35s ease-out;
+}
+
+/* Better input focus */
+input:focus, textarea:focus, select:focus {
+  box-shadow: 0 0 0 3px hsl(var(--ring) / 0.15);
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Improved dialog/modal backdrop */
+[data-state="open"][role="dialog"] {
+  animation: dialogEnter 0.2s ease-out;
+}
+
+@keyframes dialogEnter {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Better tooltip */
+[role="tooltip"] {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Skeleton loading shimmer */
+[class*="animate-pulse"] {
+  background: linear-gradient(90deg, 
+    hsl(var(--muted)) 25%, 
+    hsl(var(--muted-foreground) / 0.1) 50%, 
+    hsl(var(--muted)) 75%) !important;
+  background-size: 200% 100% !important;
+  animation: shimmer 1.5s ease-in-out infinite !important;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Dot pattern decoration for cards */
+.dot-pattern {
+  background-image: radial-gradient(circle, hsl(var(--muted-foreground) / 0.15) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* Glass effect for sidebar */
+aside[class*="bg-sidebar"] {
+  background: linear-gradient(180deg, hsl(var(--sidebar)) 0%, hsl(var(--sidebar) / 0.95) 100%) !important;
+}
+
+/* Number badge pulse for orders */
+@keyframes badgePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(234, 179, 8, 0); }
+}
+
+[class*="bg-yellow-500"][class*="rounded-full"] {
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+/* ===== FEATURE ENHANCEMENTS CSS ===== */
+
+/* Search overlay animations */
+@keyframes searchEnter {
+  from { opacity: 0; transform: scale(0.96) translateY(-8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Toast animations */
+@keyframes toastEnter {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes toastExit {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(20px); }
+}
+
+/* Bulk actions bar animation */
+@keyframes bulkBarEnter {
+  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Drag & Drop styles */
+.dragging {
+  opacity: 0.5 !important;
+  transform: scale(0.98) !important;
+}
+
+.drag-over {
+  border-color: hsl(217 91% 60%) !important;
+  box-shadow: 0 0 0 2px hsl(217 91% 60% / 0.3) !important;
+}
+
+.drag-handle {
+  cursor: grab !important;
+}
+
+.drag-handle:active {
+  cursor: grabbing !important;
+}
+
+/* ===== LIGHT MODE THEME ===== */
+html.light-mode {
+  --background: 0 0% 98%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 217 91% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 215 20% 93%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 215 20% 93%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 215 20% 93%;
+  --accent-foreground: 222 47% 11%;
+  --destructive: 0 84% 55%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 215 20% 88%;
+  --input: 215 20% 88%;
+  --ring: 217 91% 50%;
+  --sidebar: 0 0% 100%;
+  --sidebar-foreground: 222 47% 11%;
+  --sidebar-border: 215 20% 88%;
+  --sidebar-muted: 215 20% 93%;
+  --sidebar-accent: 215 20% 93%;
+}
+
+html.light-mode body {
+  background-color: hsl(0 0% 98%);
+  color: hsl(222 47% 11%);
+}
+
+html.light-mode aside[class*="bg-sidebar"] {
+  background: hsl(0 0% 100%) !important;
+  border-right-color: hsl(215 20% 88%) !important;
+}
+
+html.light-mode [class*="bg-card"] {
+  background-color: hsl(0 0% 100%) !important;
+  border-color: hsl(215 20% 88%) !important;
+}
+
+html.light-mode [class*="bg-background"] {
+  background-color: hsl(0 0% 98%) !important;
+}
+
+html.light-mode [class*="text-foreground"] {
+  color: hsl(222 47% 11%) !important;
+}
+
+html.light-mode [class*="text-muted-foreground"] {
+  color: hsl(215 16% 47%) !important;
+}
+
+html.light-mode [class*="border-border"],
+html.light-mode [class*="border-card"] {
+  border-color: hsl(215 20% 88%) !important;
+}
+
+html.light-mode table tr:hover td {
+  background-color: hsl(215 20% 96%) !important;
+}
+
+html.light-mode input,
+html.light-mode textarea,
+html.light-mode select {
+  background-color: hsl(0 0% 100%) !important;
+  border-color: hsl(215 20% 85%) !important;
+  color: hsl(222 47% 11%) !important;
+}
+
+html.light-mode .welcome-banner {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+html.light-mode #sidebar-search-btn {
+  background: hsl(215 20% 95%) !important;
+  border-color: hsl(215 20% 88%) !important;
+  color: hsl(215 16% 47%) !important;
+}
+
+html.light-mode #theme-toggle-btn {
+  border-color: hsl(215 20% 88%) !important;
+  color: hsl(215 16% 47%) !important;
+}
+
+html.light-mode [class*="hover\\:border-"]:hover {
+  box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.08), 0 0 15px -3px rgba(59, 130, 246, 0.1);
+}
+
+html.light-mode aside nav a {
+  color: hsl(215 16% 35%) !important;
+}
+
+html.light-mode aside nav a:hover,
+html.light-mode aside nav a[class*="bg-sidebar-accent"] {
+  background-color: hsl(215 20% 95%) !important;
+}
+
+/* Quick actions responsive */
+@media (max-width: 640px) {
+  .quick-actions-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .quick-actions-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Enhanced analytics cards responsive */
+#analytics-extra {
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  #analytics-extra {
+    grid-template-columns: 1fr !important;
+  }
+}

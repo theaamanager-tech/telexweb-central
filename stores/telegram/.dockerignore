@@ -1,0 +1,12 @@
+.git
+.gitignore
+.env
+*.md
+*.txt
+*.pdf
+*.html
+docs/
+fly.toml
+proxy.mjs
+boot.sh
+install.sh

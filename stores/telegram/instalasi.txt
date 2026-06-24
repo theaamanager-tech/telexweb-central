@@ -1,0 +1,9 @@
+================================================
+  PANDUAN INSTALASI - TELEGRAM BOT STORE
+================================================
+1. Edit .env — isi DATABASE_URL, ADMIN_USERNAME, ADMIN_PASSWORD, SESSION_SECRET, PORT
+2. Jalankan: bash start.sh  atau  pm2 start start.sh --name bot-store --interpreter bash
+3. Buka Admin Panel: http://ip-server:PORT
+4. Settings → isi Nama Toko, Token Bot, Pakasir, URL Server → Simpan
+Upload gagal? Tambahkan ASSETS_DIR=/tmp/bot-assets ke .env lalu restart.
+================================================

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central Stock — Admin Panel</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+      background: #0D0E10;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      background: #141517;
+      border: 1px solid #23262b;
+      border-radius: 16px;
+      padding: 32px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #23262b;
+    }
+    .card-header .icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 40, 0, 0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .card-header h1 { font-size: 18px; font-weight: 700; color: #f8fafc; }
+    .card-header p { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid #23262b;
+      background: #1a1b1e;
+      color: #e2e8f0;
+      font-size: 14px;
+      font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .form-group input:focus {
+      border-color: #FF2800;
+      box-shadow: 0 0 0 2px rgba(255, 40, 0, 0.15);
+    }
+    .form-group input::placeholder { color: #4a5568; }
+    .form-hint { font-size: 11px; color: #64748b; margin-top: 4px; }
+    .btn-row { display: flex; gap: 10px; margin-top: 24px; }
+    .btn {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+      text-align: center;
+    }
+    .btn-primary {
+      background: #FF2800;
+      color: #fff;
+      border-color: #FF2800;
+    }
+    .btn-primary:hover { background: #e02400; }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-secondary {
+      background: transparent;
+      color: #94a3b8;
+      border-color: #23262b;
+    }
+    .btn-secondary:hover { border-color: #FF2800; color: #e2e8f0; }
+    .btn-success {
+      background: #16a34a;
+      color: #fff;
+      border-color: #16a34a;
+    }
+    .btn-danger {
+      background: #dc2626;
+      color: #fff;
+      border-color: #dc2626;
+    }
+    .status-box {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      display: none;
+    }
+    .status-box.success {
+      display: block;
+      background: rgba(22, 163, 74, 0.1);
+      border: 1px solid rgba(22, 163, 74, 0.3);
+      color: #86efac;
+    }
+    .status-box.error {
+      display: block;
+      background: rgba(220, 38, 38, 0.1);
+      border: 1px solid rgba(220, 38, 38, 0.3);
+      color: #fca5a5;
+    }
+    .status-box.info {
+      display: block;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #93c5fd;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 20px;
+      color: #64748b;
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: #e2e8f0; }
+    .loader {
+      display: inline-block;
+      width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .test-result {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: #1a1b1e;
+      border: 1px solid #23262b;
+      font-size: 12px;
+      font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+      max-height: 200px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      display: none;
+    }
+    .test-result.show { display: block; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <a href="/" class="back-link">← Kembali ke Admin Panel</a>
+
+    <div class="card-header">
+      <div class="icon">🏪</div>
+      <div>
+        <h1>Central Stock</h1>
+        <p>Hubungkan ke single source of truth stok</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="centralUrl">Central API URL</label>
+      <input type="url" id="centralUrl" placeholder="https://central-panel.vercel.app">
+      <div class="form-hint">URL tempat Central Panel di-deploy</div>
+    </div>
+
+    <div class="form-group">
+      <label for="centralKey">API Key</label>
+      <input type="password" id="centralKey" placeholder="••••••••">
+      <div class="form-hint">Generate dari Central Panel → API Keys</div>
+    </div>
+
+    <div id="statusBox" class="status-box"></div>
+    <div id="testResult" class="test-result"></div>
+
+    <div class="btn-row">
+      <button id="testBtn" class="btn btn-secondary">🔍 Test Koneksi</button>
+      <button id="saveBtn" class="btn btn-primary">💾 Simpan</button>
+    </div>
+  </div>
+
+  <script>
+    const API = '/api';
+
+    function getToken() {
+      return localStorage.getItem('dn_admin_token');
+    }
+
+    function headers() {
+      const h = { 'Content-Type': 'application/json' };
+      const token = getToken();
+      if (token) h['Authorization'] = 'Bearer ' + token;
+      return h;
+    }
+
+    function showStatus(msg, type) {
+      const box = document.getElementById('statusBox');
+      box.textContent = msg;
+      box.className = 'status-box ' + type;
+    }
+
+    function showTestResult(data) {
+      const el = document.getElementById('testResult');
+      el.textContent = JSON.stringify(data, null, 2);
+      el.classList.add('show');
+    }
+
+    async function loadConfig() {
+      try {
+        const res = await fetch(API + '/settings', { headers: headers() });
+        if (!res.ok) {
+          if (res.status === 401) {
+            showStatus('⛔ Belum login. Buka Admin Panel dulu.', 'error');
+          }
+          return;
+        }
+        const data = await res.json();
+        const settings = data.settings || {};
+        document.getElementById('centralUrl').value = settings.central_api_url?.value || 'https://central-panel.vercel.app';
+        const key = settings.central_api_key?.value || '';
+        if (key && !key.includes('...')) {
+          document.getElementById('centralKey').value = key;
+        } else if (key) {
+          document.getElementById('centralKey').placeholder = key;
+          document.getElementById('centralKey').value = '';
+        }
+      } catch (e) {
+        showStatus('Gagal load config: ' + e.message, 'error');
+      }
+    }
+
+    async function testConnection() {
+      const btn = document.getElementById('testBtn');
+      const url = document.getElementById('centralUrl').value.trim();
+      const key = document.getElementById('centralKey').value.trim();
+
+      if (!url) { showStatus('Isi URL Central API dulu', 'error'); return; }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="loader"></span> Testing...';
+      showStatus('', '');
+      document.getElementById('testResult').classList.remove('show');
+
+      try {
+        const res = await fetch(API + '/central-test', {
+          method: 'POST',
+          headers: headers(),
+          body: JSON.stringify({ url, key })
+        });
+        const data = await res.json();
+        showTestResult(data);
+
+        if (data.success) {
+          const count = Array.isArray(data.data) ? data.data.length : (data.data?.products?.length || data.data?.length || 0);
+          showStatus('✅ Koneksi berhasil! ' + count + ' produk tersedia di Central.', 'success');
+        } else {
+          showStatus('❌ ' + (data.error || 'Koneksi gagal'), 'error');
+        }
+      } catch (e) {
+        showStatus('❌ Gagal test: ' + e.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '🔍 Test Koneksi';
+      }
+    }
+
+    async function saveConfig() {
+      const btn = document.getElementById('saveBtn');
+      const url = document.getElementById('centralUrl').value.trim();
+      const key = document.getElementById('centralKey').value.trim();
+
+      if (!url) { showStatus('Isi URL Central API dulu', 'error'); return; }
+      if (!key) { showStatus('Isi API Key dulu', 'error'); return; }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="loader"></span> Menyimpan...';
+      showStatus('', '');
+
+      try {
+        const res = await fetch(API + '/settings', {
+          method: 'POST',
+          headers: headers(),
+          body: JSON.stringify({
+            settings: {
+              central_api_url: url,
+              central_api_key: key
+            }
+          })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          showStatus('✅ Config Central Stock berhasil disimpan!', 'success');
+        } else {
+          showStatus('❌ ' + (data.error || 'Gagal menyimpan'), 'error');
+        }
+      } catch (e) {
+        showStatus('❌ Gagal simpan: ' + e.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '💾 Simpan';
+      }
+    }
+
+    document.getElementById('testBtn').addEventListener('click', testConnection);
+    document.getElementById('saveBtn').addEventListener('click', saveConfig);
+
+    loadConfig();
+  </script>
+</body>
+</html>

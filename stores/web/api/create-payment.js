@@ -78,12 +78,17 @@ export default async function handler(req, res) {
       return res.status(502).json({ error: "Gagal membuat QRIS: " + e.message });
     }
 
-    await admin.from("orders").insert({
+    const { error: insertErr } = await admin.from("orders").insert({
       order_id: orderId, variant_id, product_name: variant.products?.name || "",
       variant_name: variant.name, unit_price: variant.price, discount, amount,
       quantity: qty, coupon_code: couponCode, status: "pending", payment_method: "qris",
       qr_string: payment.payment_number, buyer_contact: contact || "", buyer_note: note || "",
     });
+    if (insertErr) {
+      // Rollback: order gagal disimpan, return error
+      console.error("[create-payment] insert order failed:", insertErr);
+      return res.status(500).json({ error: "Gagal menyimpan pesanan: " + insertErr.message });
+    }
 
     return res.status(200).json({
       order_id: orderId,

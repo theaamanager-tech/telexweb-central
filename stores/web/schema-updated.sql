@@ -75,6 +75,7 @@ CREATE TABLE public.orders (
   qr_string     TEXT,
   delivery_text TEXT,                              -- credential dari Central via fulfill
   buyer_contact TEXT DEFAULT '',
+  buyer_note    TEXT DEFAULT '',
   created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
   paid_at       TIMESTAMPTZ
 );

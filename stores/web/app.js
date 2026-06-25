@@ -11,6 +11,7 @@ let activeFilter = "all";
 let searchTerm = "";
 let pollTimer = null;
 let currentSelection = null; // { product, variant }
+let storeOpen = true;
 
 /* ===================== STORE CONFIG ===================== */
 let STORE = {};
@@ -39,6 +40,7 @@ async function loadStoreConfig() {
 }
 function applyStoreConfig() {
   if (!STORE.name) return;
+  storeOpen = STORE.store_active !== false;
   document.title = STORE.name + " — " + (STORE.tagline || "Produk Digital Premium");
   const heroTitle = $("#heroTitle");
   if (heroTitle && STORE.hero_title) {
@@ -148,7 +150,9 @@ function getSelectedVariant(card) {
 function updateBuyButton(card) {
   const v = getSelectedVariant(card);
   const btn = card.querySelector(".buy-btn");
-  if (!v || v.price == null) {
+  if (!storeOpen) {
+    btn.disabled = true; btn.innerHTML = `<i data-lucide="cloud-off" class="w-[16px]"></i> Sedang Offline`;
+  } else if (!v || v.price == null) {
     btn.disabled = true; btn.innerHTML = `<i data-lucide="zap" class="w-[16px]"></i> Stok Habis`;
   } else if (v.available <= 0) {
     btn.disabled = true; btn.innerHTML = `<i data-lucide="zap" class="w-[16px]"></i> Stok Habis`;
@@ -229,8 +233,8 @@ function startBuy(productId, variantId) {
   const p = CATALOG.find((x) => x.id === productId);
   const v = p?.variants.find((x) => x.id === variantId);
   if (!p || !v) return;
+  if (!storeOpen) { toast("Toko sedang tutup", false); return; }
   if (v.price == null) { toast("Variasi ini chat admin dulu", false); return; }
-  if (v.available <= 0) { toast("Stok habis", false); return; }
   currentSelection = { product: p, variant: v, qty: 1 };
   renderBillSummary();
   openBill();

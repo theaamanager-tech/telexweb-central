@@ -11,6 +11,7 @@ export default async function handler(req, res) {
     const { data, error } = await admin.from("app_config").select("*").eq("id", 1).single();
     if (error) throw error;
     return res.json({
+      store_active: data.store_active !== false,
       name: data.store_name || "Novaciy°",
       tagline: data.store_tagline || "Produk Digital Premium",
       hero_title: data.store_hero_title || 'Beli sekali klik, akun langsung jadi.',

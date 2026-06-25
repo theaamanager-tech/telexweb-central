@@ -109,6 +109,8 @@ CREATE TABLE public.app_config (
   annon_badge_text_color TEXT DEFAULT '#0D0E10',
   annon_bg         TEXT DEFAULT 'rgba(40,195,157,0.12)',
   annon_text_color TEXT DEFAULT '#CFEEE6',
+  -- Store status
+  store_active    BOOLEAN DEFAULT true,
   -- Social Media
   soc_wa_active               BOOLEAN DEFAULT false,
   soc_wa_number               TEXT DEFAULT '',

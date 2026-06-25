@@ -620,6 +620,7 @@ async function loadStoreConfig() {
     const d = await r.json();
     if (!r.ok) throw new Error(d.error);
     $("#sName").value = d.name || "";
+    $("#sStoreActive").checked = d.store_active !== false;
     $("#sTagline").value = d.tagline || "";
     $("#sHeroTitle").value = d.hero_title || "";
     $("#sHeroSub").value = d.hero_subtitle || "";
@@ -634,6 +635,7 @@ async function loadStoreConfig() {
 }
 $("#saveStoreBtn").addEventListener("click", async () => {
   const body = {
+    store_active: $("#sStoreActive").checked,
     store_name: $("#sName").value.trim(),
     store_tagline: $("#sTagline").value.trim(),
     store_hero_title: $("#sHeroTitle").value.trim(),
